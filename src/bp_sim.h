@@ -765,7 +765,14 @@ public:
 
     inline void reset_pkt_in_flow(void);
     inline uint8_t get_plugin_id(void){
+#if !defined(__clang__) && defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
         return ( m_template_info->m_plugin_id);
+#if !defined(__clang__) && defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
     }
 
     inline bool is_responder_pkt();
