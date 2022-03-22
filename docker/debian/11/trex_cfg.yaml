@@ -1,0 +1,13 @@
+- port_limit    : 4
+  version       : 2
+  c             : 8
+  interfaces    : ["dummy0", "dummy1", "dummy2", "dummy3"]
+  port_info     :
+                 - ip         : 1.1.1.1
+                   default_gw : 4.4.4.4
+                 - ip         : 2.2.2.2
+                   default_gw : 3.3.3.3
+                 - ip         : 3.3.3.3
+                   default_gw : 2.2.2.2
+                 - ip         : 4.4.4.4
+                   default_gw : 1.1.1.1
