@@ -15,3 +15,11 @@ Then,
 ./b configure
 ./b build
 
+The launcher uses Meson and writes output to build/doc/.
+Alternatively, from the repository root:
+
+meson setup build-doc -Ddpdk=false -Dsimulator=false -Ddocs=true
+meson compile -C build-doc
+
+The output is in build-doc/doc/. Add -Ddocs_pdf=false to omit PDF output.
+

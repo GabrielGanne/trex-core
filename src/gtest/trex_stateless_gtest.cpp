@@ -6533,12 +6533,11 @@ public:
 
         rx_tpg_port->handle_pkt(m1);
 
-        rte_pktmbuf_free(m1);
-
         Json::Value stats;
         rx_tpg_port->get_tpg_stats(stats, tpg_header->tpgid, 0, 1, false, false);
 
         Json::Value& tpgid_stats = stats[std::to_string(tpg_header->tpgid)];
+        rte_pktmbuf_free(m1);
         Json::Value& tag_stats = tpgid_stats[std::to_string(tag_mgr->get_qinq_tag(20, 30))];
         Json::Value& unknown_stats = tpgid_stats["unknown_tag"];
         Json::Value& untagged = tpgid_stats["untagged"];
@@ -6612,14 +6611,13 @@ public:
 
         rx_tpg_port->handle_pkt(m1);
 
-        rte_pktmbuf_free(m1);
-
         // let's see the stats are successfully parsed
 
         Json::Value stats;
         rx_tpg_port->get_tpg_stats(stats, tpg_header->tpgid, 0, 1, true, false);
 
         Json::Value& tpgid_stats = stats[std::to_string(tpg_header->tpgid)];
+        rte_pktmbuf_free(m1);
         Json::Value& tag_stats = tpgid_stats[std::to_string(tag_mgr->get_dot1q_tag(7))];
         Json::Value& unknown_stats = tpgid_stats["unknown_tag"];
 
@@ -6683,12 +6681,11 @@ public:
 
         rx_tpg_port->handle_pkt(m1);
 
-        rte_pktmbuf_free(m1);
-
         Json::Value stats;
         rx_tpg_port->get_tpg_stats(stats, tpg_header->tpgid, 0, 1, true, true);
 
         Json::Value& tpgid_stats = stats[std::to_string(tpg_header->tpgid)];
+        rte_pktmbuf_free(m1);
         Json::Value& tag_stats = tpgid_stats[std::to_string(tag_mgr->get_dot1q_tag(7))];
         Json::Value& unknown_stats = tpgid_stats["unknown_tag"];
         Json::Value& untagged = tpgid_stats["untagged"];

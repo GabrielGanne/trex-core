@@ -87,7 +87,7 @@ extern "C" {
 #include "astf_batch/trex_astf_batch.h"
 
 #include "publisher/trex_publisher.h"
-#include "../linux_dpdk/version.h"
+#include "version.h"
 
 #include "dpdk_funcs.h"
 #include "global_io_mode.h"

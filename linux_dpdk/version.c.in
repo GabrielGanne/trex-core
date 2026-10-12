@@ -1,0 +1,9 @@
+#include "version.h"
+
+const char *get_build_date(void) {
+    return __DATE__;
+}
+
+const char *get_build_time(void) {
+    return __TIME__;
+}

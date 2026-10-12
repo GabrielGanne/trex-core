@@ -11,7 +11,7 @@ import tempfile
 import argparse
 import shutil
 
-with open('BIRD_VERSION', 'r') as f:
+with open(os.path.join(os.path.dirname(__file__), 'BIRD_VERSION'), 'r') as f:
     BIRD_VER = f.read()
 
 DEFAULT_CONFIG = """

@@ -162,7 +162,94 @@ Internal link:https://github.com/cisco-system-traffic-generator/trex-core/wiki[W
 
 === How to build
 
-Internal link:https://github.com/cisco-system-traffic-generator/trex-core/wiki[Wiki]
+TRex uses Meson 0.61 or newer, Ninja, Python 3, and a C/C++ compiler.
+Install the existing zlib development dependency (`zlib1g-dev` on Ubuntu,
+`zlib-devel` on Fedora). DPDK, YAML, JSON, BPF, and ZeroMQ are bundled.
+
+From the repository root:
+
+[source,bash]
+----
+meson setup build
+meson compile -C build
+----
+
+This builds TRex and the simulator in release and debug modes, including
+the older CPU TRex variants. Build outputs are linked into `scripts/`,
+and `build/compile_commands.json` is available to editors.
+Installed and packaged binaries use the system C++ runtime, which must
+support the selected compiler.
+Compiler warnings are reported; use Meson's `-Dwerror=true` to make them
+fatal.
+
+The existing launchers also use Meson:
+
+[source,bash]
+----
+cd linux_dpdk
+./b configure
+./b build
+----
+
+Use `linux/b` for the simulator and `doc/b` for documentation.
+Each launcher has its own build directory. Meson can also build either
+component independently:
+
+[source,bash]
+----
+meson setup build-sim -Ddpdk=false
+meson setup build-dpdk -Dsimulator=false
+----
+
+[options="header",cols="2,3"]
+|===
+|Meson setup option |Purpose
+|`-Dbuild_modes=release` |Build only release binaries (`debug` selects debug binaries)
+|`-Dold_targets=false` |Skip older CPU binaries with the `-o` suffix
+|`-Dmlx5=disabled` |Disable the Mellanox PMD (`./b configure --no-mlx`)
+|`-Dbnxt=false` |Disable the Broadcom PMD
+|`-Dtap=true` |Enable the TAP PMD
+|`-Dmana=true` |Enable MANA; requires its RDMA libraries
+|`-Dntacc=true` |Enable Napatech; requires its PMD sources and SDK
+|`-Dnew_memory=true` |Use NUMA aware memory; requires libnuma development files
+|`-Darchive=true` |Enable libarchive; requires its development files
+|`-Dbird=true` |Build the existing optional BIRD server; downloads its configured version
+|`-Db_sanitize=address` |Enable AddressSanitizer and its Linux leak checks (`./b configure --sanitized`)
+|`-Dscript_links=false` |Keep build outputs in the build directory
+|`-Ddpdk_config=path` |Select a directory containing the target `rte_config.h`
+|===
+
+Compiler selection uses standard Meson native or cross files. The launchers
+also accept the existing `--gcc6`, `--gcc7`, and `--gcc8` switches. This
+checkout supplies the current DPDK configuration for x86_64; ARM and PowerPC
+builds require the matching configuration through `dpdk_config`.
+
+Run the existing simulator unit and functional tests after building both
+simulator variants:
+
+[source,bash]
+----
+meson test -C build --suite unit --print-errorlogs
+meson test -C build --suite functional --print-errorlogs
+----
+
+For the documentation, install the existing AsciiDoc, Sphinx, dblatex, and
+source-highlight requirements, then use:
+
+[source,bash]
+----
+meson setup build-doc -Ddpdk=false -Dsimulator=false -Ddocs=true
+meson compile -C build-doc
+----
+
+HTML, PDF, and Python API output goes into `build-doc/doc/`. Use
+`-Ddocs_pdf=false` for HTML and API output without PDF conversion.
+
+`meson install -C build --destdir staging` stages the runtime under
+`staging/<prefix>/share/trex/`. After building TRex and both simulator
+variants, `meson compile -C build pkg` creates the existing versioned
+runtime archive and Python client archive. `linux_dpdk/b pkg` also accepts
+`--pkg-dir` and `--pkg-file`.
 
 === YouTrack
 

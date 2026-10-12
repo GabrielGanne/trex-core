@@ -1,5 +1,12 @@
 # Compiled source #
 ###################
+/build*/
+!/build-aux/
+/meson-gcc*.ini
+linux/meson-gcc*.ini
+linux_dpdk/meson-gcc*.ini
+doc/meson-gcc*.ini
+doc/build/
 *.com
 *.class
 *.dll
@@ -9,6 +16,7 @@
 linux_dpdk/.waf*
 linux_dpdk/build*
 linux_dpdk/version*
+!linux_dpdk/version.c.in
 linux_dpdk/trex-64.bz2
 linux_dpdk/trex-64.bz2
 linux_dpdk/*.html

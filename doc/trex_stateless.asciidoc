@@ -7366,7 +7366,7 @@ Ether()/IP()/TCP()/"GET / HTTP/1.1\r\nHost: www.google.com\r\n\r\n"
 
 ==== HLT supported Arguments anchor:altapi-support[]
 
-include::build/hlt_args.asciidoc[]
+include::{hlt_args}[]
 
 ==== FD.IO open source project using TRex 
 
